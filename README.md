@@ -1,27 +1,74 @@
 # Notes App — Ensolvers Challenge
 
+A simple full-stack note-taking web application that allows users to create, edit, delete and archive notes, built as a Single Page Application (SPA).
+
 ## Stack
 
-- **Frontend:** React + TypeScript + Vite + Tailwind CSS
-- **Backend:** NestJS + TypeScript + TypeORM + SQLite (chosen to simplify local setup)
+- **Frontend:** React 19 + TypeScript + Vite + Tailwind CSS
+- **Backend:** NestJS 11 + TypeScript + TypeORM + SQLite
+
+Note: SQLite was chosen to simplify setup and allow the application to run with a single command without requiring external services.
 
 ## Requirements
 
-- Node.js >= 18.x
-- npm >= 9.x
+Make sure you have the following installed:
+
+| Tool    | Version |
+| ------- | ------- |
+| Node.js | >= 18   |
+| npm     | >= 9    |
 
 ## How to run
 
-Open your terminal in the project root folder and run:
+1. Clone the repository:
+
+```bash
+git clone https://github.com/hirelens-challenges/Rodriguez-96ad40
+cd Rodriguez-96ad40
+```
+
+2. Run the application (Linux/macOS):
 
 ```bash
 chmod +x start.sh
 ./start.sh
 ```
 
+This script will:
+
+- Verify that Node.js and npm are installed
+- Install all dependencies for both frontend and backend
+- Start the backend on `http://localhost:3000`
+- Start the frontend on `http://localhost:5173`
+
+> Note: This script is intended for Linux/macOS environments.
+
+## Architecture
+
+### Backend — NestJS
+
+Structured in layers:
+
+- **Controllers** — handle HTTP requests
+- **Services** — business logic
+- **Entities** — database models via TypeORM
+
+### Frontend — React SPA
+
+- `src/api/` — all backend calls (Axios)
+- `src/components/` — reusable UI components
+- `src/types/` — TypeScript interfaces
+
+## Features
+
+### Phase 1
+
+- Create, edit and delete notes
+- Archive and unarchive notes
+- View active notes
+- View archived notes
+
 ## URLs
 
 - Frontend: http://localhost:5173
 - Backend: http://localhost:3000
-
-_(More details coming soon)_
