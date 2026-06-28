@@ -1,26 +1,18 @@
-# Backend Notes App — Ensolvers Challenge
+# Backend — Notes App
 
-## Stack
+Built with NestJS + TypeScript + TypeORM + SQLite.
 
-- **Backend:** NestJS + TypeScript + TypeORM + SQLite (chosen to simplify local setup)
+## Structure
 
-## Requirements
+- `src/notes/notes.controller.ts` — HTTP endpoints
+- `src/notes/notes.service.ts` — business logic
+- `src/notes/note.entity.ts` — database model
 
-- Node.js >= 18.x
-- npm >= 9.x
-
-## How to run
-
-Open your terminal in the project root folder and run:
+## Run individually
 
 ```bash
-chmod +x start.sh
-./start.sh
+npm install
+npm run start:dev
 ```
 
-## URLs
-
-- Frontend: http://localhost:5173
-- Backend: http://localhost:3000
-
-_(More details coming soon)_
+API available at `http://localhost:3000`

@@ -1,26 +1,18 @@
-# Frontend Notes App — Ensolvers Challenge
+# Frontend — Notes App
 
-## Stack
+Built with React + TypeScript + Vite + Tailwind CSS.
 
-- **Frontend:** React + TypeScript + Vite + Tailwind CSS
+## Structure
 
-## Requirements
+- `src/api/` — backend calls (Axios)
+- `src/components/` — UI components
+- `src/types/` — TypeScript interfaces
 
-- Node.js >= 18.x
-- npm >= 9.x
-
-## How to run
-
-Open your terminal in the project root folder and run:
+## Run individually
 
 ```bash
-chmod +x start.sh
-./start.sh
+npm install
+npm run dev
 ```
 
-## URLs
-
-- Frontend: http://localhost:5173
-- Backend: http://localhost:3000
-
-_(More details coming soon)_
+App available at `http://localhost:5173`
