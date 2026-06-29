@@ -27,6 +27,7 @@ export default function CategoryManager({
 
 	const handleAdd = async (categoryId: number) => {
 		await addCategoryToNote(noteId, categoryId);
+		setAllCategories(await getCategories());
 		onUpdate();
 	};
 

@@ -5,17 +5,19 @@ import { getCategories } from "../api/notes";
 interface Props {
 	selectedCategoryId: number | null;
 	onSelectCategory: (id: number | null) => void;
+	refreshTrigger: number;
 }
 
 export default function CategoryFilter({
 	selectedCategoryId,
 	onSelectCategory,
+	refreshTrigger,
 }: Props) {
 	const [categories, setCategories] = useState<Category[]>([]);
 
 	useEffect(() => {
 		getCategories().then(setCategories);
-	}, []);
+	}, [refreshTrigger]);
 
 	if (categories.length === 0) return null;
 
