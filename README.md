@@ -9,14 +9,18 @@ A simple full-stack note-taking web application that allows users to create, edi
 
 Note: SQLite was chosen to simplify setup and allow the application to run with a single command without requiring external services.
 
+## Deploy
+
+Live deploy was not performed due to repository permission limitations (repository belongs to Ensolvers organization). <br>The application can be run locally using the `start.sh` script.
+
 ## Requirements
 
 Make sure you have the following installed:
 
 | Tool    | Version |
 | ------- | ------- |
-| Node.js | >= 18   |
-| npm     | >= 9    |
+| Node.js | 22.14.0 |
+| npm     | 11.17.0 |
 
 ## How to run
 
