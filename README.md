@@ -1,6 +1,7 @@
 # Notes App - Full Stack Application
 
 A simple full-stack note-taking web application built as a Single Page Application (SPA). It allows users to create, edit, delete and archive notes, as well as manage categories and filter notes by category.
+This project was originally developed as part of a technical challenge and later extended with additional features.
 
 ## Stack
 
