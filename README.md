@@ -1,6 +1,6 @@
 # Notes App — Ensolvers Challenge
 
-A simple full-stack note-taking web application that allows users to create, edit, delete and archive notes, built as a Single Page Application (SPA).
+A simple full-stack note-taking web application built as a Single Page Application (SPA). It allows users to create, edit, delete and archive notes, as well as add and remove categories and filter notes by category.
 
 ## Stack
 
@@ -11,7 +11,7 @@ Note: SQLite was chosen to simplify setup and allow the application to run with 
 
 ## Deploy
 
-Live deploy was not performed due to repository permission limitations (repository belongs to Ensolvers organization). <br>The application can be run locally using the `start.sh` script.
+Live deploy was not performed due to repository permission limitations (repository belongs to Ensolvers organization). The application can be run locally using the `start.sh` script.
 
 ## Requirements
 
@@ -71,6 +71,11 @@ Structured in layers:
 - Archive and unarchive notes
 - View active notes
 - View archived notes
+
+### Phase 2
+
+- Add and remove categories from notes
+- Filter notes by category
 
 ## URLs
 
