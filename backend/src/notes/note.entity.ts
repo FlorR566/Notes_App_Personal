@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+import { Category } from '../categories/category.entity';
 
 @Entity()
 export class Note {
@@ -19,6 +22,10 @@ export class Note {
 
   @Column({ default: false })
   archived: boolean;
+
+  @ManyToMany(() => Category, (category) => category.notes, { eager: true })
+  @JoinTable()
+  categories: Category[];
 
   @CreateDateColumn()
   createdAt: Date;
