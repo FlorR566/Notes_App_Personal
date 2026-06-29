@@ -6,13 +6,18 @@ This project was originally developed as part of a technical challenge and later
 ## Stack
 
 - **Frontend:** React 19 + TypeScript + Vite + Tailwind CSS
-- **Backend:** NestJS 11 + TypeScript + TypeORM + SQLite
+- **Backend:** NestJS 11 + TypeScript + TypeORM
 
-Note: SQLite was chosen to simplify setup and allow the application to run with a single command without requiring external services.
-
+**Database:**
+- **Local:** SQLite (chosen to simplify setup, no external services required)
+- **Production:** PostgreSQL (hosted on Render)
+  
 ## Deploy
 
-Live deployment is not available yet. The application can be run locally using the `start.sh` script
+- **Frontend:** https://notes-app-2026.vercel.app
+- **Backend:** https://notes-app-personal.onrender.com
+
+- To run locally instead, use the `start.sh` script — see [How to run](#how-to-run) section for instructions.
 
 ## Requirements
 
@@ -78,7 +83,4 @@ Structured in layers:
 - Add and remove categories from notes
 - Filter notes by category
 
-## URLs
 
-- Frontend: http://localhost:5173
-- Backend: http://localhost:3000
