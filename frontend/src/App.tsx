@@ -11,6 +11,13 @@ import {
 import NoteList from "./components/NoteList";
 import NoteForm from "./components/NoteForm";
 
+const BACKEND_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+
+// Keep Render free tier alive
+const keepAlive = () => {
+	fetch(`${BACKEND_URL}/health`).catch(() => {});
+};
+
 type Tab = "active" | "archived";
 
 export default function App() {
@@ -28,6 +35,12 @@ export default function App() {
 	useEffect(() => {
 		fetchNotes();
 	}, [tab]);
+
+	useEffect(() => {
+		keepAlive();
+		const interval = setInterval(keepAlive, 14 * 60 * 1000); // every 14 minutes
+		return () => clearInterval(interval);
+	}, []);
 
 	const handleSubmit = async (data: { title: string; content: string }) => {
 		if (editingNote) {
@@ -76,7 +89,7 @@ export default function App() {
 					)}
 				</div>
 
-				{/* Formulario */}
+				{/* Form */}
 				{showForm && (
 					<div className="mb-6">
 						<NoteForm
@@ -117,7 +130,7 @@ export default function App() {
 					</button>
 				</div>
 
-				{/* Lista de notas */}
+				{/* List of notes */}
 				<NoteList
 					notes={notes}
 					onEdit={handleEdit}
