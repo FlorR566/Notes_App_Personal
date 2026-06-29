@@ -1,6 +1,6 @@
-# Notes App — Ensolvers Challenge
+# Notes App - Full Stack Application
 
-A simple full-stack note-taking web application built as a Single Page Application (SPA). It allows users to create, edit, delete and archive notes, as well as add and remove categories and filter notes by category.
+A simple full-stack note-taking web application built as a Single Page Application (SPA). It allows users to create, edit, delete and archive notes, as well as manage categories and filter notes by category.
 
 ## Stack
 
@@ -11,7 +11,7 @@ Note: SQLite was chosen to simplify setup and allow the application to run with 
 
 ## Deploy
 
-Live deploy was not performed due to repository permission limitations (repository belongs to Ensolvers organization). The application can be run locally using the `start.sh` script.
+Live deployment is not available yet. The application can be run locally using the `start.sh` script
 
 ## Requirements
 
@@ -27,8 +27,8 @@ Make sure you have the following installed:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/hirelens-challenges/Rodriguez-96ad40
-cd Rodriguez-96ad40
+git clone https://github.com/FlorR566/Notes_App_Personal
+cd Notes_App_Personal
 ```
 
 2. Run the application (Linux/macOS):
