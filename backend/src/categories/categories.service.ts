@@ -35,8 +35,14 @@ export class CategoriesService {
     if (!category)
       throw new NotFoundException(`Category #${categoryId} not found`);
 
-    note.categories = [...(note.categories || []), category];
-    return this.notesRepository.save(note);
+    // Veriry if category is alrready asigned before to add
+    const alrreadyAssigned = note.categories.some((c) => c.id === categoryId);
+    if (!alrreadyAssigned) {
+      note.categories = [...(note.categories || []), category];
+      return this.notesRepository.save(note);
+    }
+
+    return note;
   }
 
   async removeCategoryFromNote(
@@ -56,8 +62,9 @@ export class CategoriesService {
   async getNotesByCategory(categoryId: number): Promise<Note[]> {
     return this.notesRepository
       .createQueryBuilder('note')
-      .innerJoin('note.categories', 'category')
-      .where('category.id = :categoryId', { categoryId })
+      .leftJoinAndSelect('note.categories', 'category')
+      .innerJoin('note.categories', 'filterCategory')
+      .where('filterCategory.id = :categoryId', { categoryId })
       .andWhere('note.archived = false')
       .getMany();
   }
