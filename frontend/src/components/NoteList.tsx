@@ -6,6 +6,7 @@ interface Props {
 	onEdit: (note: Note) => void;
 	onDelete: (id: number) => void;
 	onToggleArchive: (id: number) => void;
+	onUpdate: () => void;
 }
 
 export default function NoteList({
@@ -13,11 +14,12 @@ export default function NoteList({
 	onEdit,
 	onDelete,
 	onToggleArchive,
+	onUpdate,
 }: Props) {
 	if (notes.length === 0) {
 		return (
 			<p className="text-gray-400 text-sm text-center py-8">
-				No hay notas todavía.
+				No notes here yet.
 			</p>
 		);
 	}
@@ -31,6 +33,7 @@ export default function NoteList({
 					onEdit={onEdit}
 					onDelete={onDelete}
 					onToggleArchive={onToggleArchive}
+					onUpdate={onUpdate}
 				/>
 			))}
 		</div>

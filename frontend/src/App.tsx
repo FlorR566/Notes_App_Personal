@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { Note } from "./types/note";
 import {
 	getActiveNotes,
@@ -7,9 +7,11 @@ import {
 	updateNote,
 	deleteNote,
 	toggleArchive,
+	getNotesByCategory,
 } from "./api/notes";
 import NoteList from "./components/NoteList";
 import NoteForm from "./components/NoteForm";
+import CategoryFilter from "./components/CategoryFilter";
 
 const BACKEND_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
@@ -25,16 +27,26 @@ export default function App() {
 	const [tab, setTab] = useState<Tab>("active");
 	const [showForm, setShowForm] = useState(false);
 	const [editingNote, setEditingNote] = useState<Note | null>(null);
+	const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+		null,
+	);
+	const [categoryRefresh, setCategoryRefresh] = useState(0);
 
-	const fetchNotes = async () => {
-		const data =
-			tab === "active" ? await getActiveNotes() : await getArchivedNotes();
-		setNotes(data);
-	};
+	const fetchNotes = useCallback(async () => {
+		setCategoryRefresh((prev) => prev + 1); // refresh CategoryFilter
+		if (selectedCategoryId !== null && tab === "active") {
+			const data = await getNotesByCategory(selectedCategoryId);
+			setNotes(data);
+		} else {
+			const data =
+				tab === "active" ? await getActiveNotes() : await getArchivedNotes();
+			setNotes(data);
+		}
+	}, [tab, selectedCategoryId]);
 
 	useEffect(() => {
 		fetchNotes();
-	}, [tab]);
+	}, [fetchNotes]);
 
 	useEffect(() => {
 		keepAlive();
@@ -73,10 +85,14 @@ export default function App() {
 		setEditingNote(null);
 	};
 
+	const handleSelectCategory = (id: number | null) => {
+		setSelectedCategoryId(id);
+	};
+
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<div className="max-w-5xl mx-auto px-4 py-8">
-				{/*Header*/}
+				{/* Header */}
 				<div className="flex items-center justify-between mb-6">
 					<h1 className="text-2xl font-bold text-gray-800">Notes App</h1>
 					{!showForm && tab === "active" && (
@@ -84,7 +100,7 @@ export default function App() {
 							onClick={() => setShowForm(true)}
 							className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 text-sm font-medium"
 						>
-							+ Nueva nota
+							+ Create Note
 						</button>
 					)}
 				</div>
@@ -101,11 +117,12 @@ export default function App() {
 				)}
 
 				{/* Tabs */}
-				<div className="flex gap-2 mb-6">
+				<div className="flex gap-2 mb-4">
 					<button
 						onClick={() => {
 							setTab("active");
 							setShowForm(false);
+							setSelectedCategoryId(null);
 						}}
 						className={`px-4 py-2 rounded-lg text-sm font-medium ${
 							tab === "active"
@@ -113,12 +130,13 @@ export default function App() {
 								: "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
 						}`}
 					>
-						Activas
+						Active
 					</button>
 					<button
 						onClick={() => {
 							setTab("archived");
 							setShowForm(false);
+							setSelectedCategoryId(null);
 						}}
 						className={`px-4 py-2 rounded-lg text-sm font-medium ${
 							tab === "archived"
@@ -126,16 +144,26 @@ export default function App() {
 								: "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
 						}`}
 					>
-						Archivadas
+						Archived
 					</button>
 				</div>
 
-				{/* List of notes */}
+				{/* Category filter — only on active tab */}
+				{tab === "active" && (
+					<CategoryFilter
+						selectedCategoryId={selectedCategoryId}
+						onSelectCategory={handleSelectCategory}
+						refreshTrigger={categoryRefresh}
+					/>
+				)}
+
+				{/* Notes list */}
 				<NoteList
 					notes={notes}
 					onEdit={handleEdit}
 					onDelete={handleDelete}
 					onToggleArchive={handleToggleArchive}
+					onUpdate={fetchNotes}
 				/>
 			</div>
 		</div>

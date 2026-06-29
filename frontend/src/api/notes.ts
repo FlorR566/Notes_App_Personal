@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Note } from "../types/note";
+import type { Note, Category } from "../types/note";
 
 const api = axios.create({
 	baseURL: "http://localhost:3000",
@@ -9,7 +9,7 @@ export const getActiveNotes = (): Promise<Note[]> =>
 	api.get("/notes").then((res) => res.data);
 
 export const getArchivedNotes = (): Promise<Note[]> =>
-	api.get("/Notes/archived").then((res) => res.data);
+	api.get("/notes/archived").then((res) => res.data);
 
 export const createNote = (data: {
 	title: string;
@@ -26,3 +26,27 @@ export const deleteNote = (id: number): Promise<void> =>
 
 export const toggleArchive = (id: number): Promise<Note> =>
 	api.patch(`/notes/${id}/archive`).then((res) => res.data);
+
+// Categories
+export const getCategories = (): Promise<Category[]> =>
+	api.get("/categories").then((res) => res.data);
+
+export const createCategory = (name: string): Promise<Category> =>
+	api.post("/categories", { name }).then((res) => res.data);
+
+export const addCategoryToNote = (
+	noteId: number,
+	categoryId: number,
+): Promise<Note> =>
+	api.post(`/categories/${noteId}/notes/${categoryId}`).then((res) => res.data);
+
+export const removeCategoryFromNote = (
+	noteId: number,
+	categoryId: number,
+): Promise<Note> =>
+	api
+		.delete(`/categories/${noteId}/notes/${categoryId}`)
+		.then((res) => res.data);
+
+export const getNotesByCategory = (categoryId: number): Promise<Note[]> =>
+	api.get(`/categories/notes/${categoryId}`).then((res) => res.data);
