@@ -84,7 +84,7 @@ export default function App() {
 							onClick={() => setShowForm(true)}
 							className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-4 py-2 text-sm font-medium"
 						>
-							+ Nueva nota
+							+ Create Note
 						</button>
 					)}
 				</div>
@@ -113,7 +113,7 @@ export default function App() {
 								: "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
 						}`}
 					>
-						Activas
+						Active
 					</button>
 					<button
 						onClick={() => {
@@ -126,7 +126,7 @@ export default function App() {
 								: "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
 						}`}
 					>
-						Archivadas
+						Archived
 					</button>
 				</div>
 

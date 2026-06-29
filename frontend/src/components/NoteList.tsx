@@ -17,7 +17,7 @@ export default function NoteList({
 	if (notes.length === 0) {
 		return (
 			<p className="text-gray-400 text-sm text-center py-8">
-				No hay notas todavía.
+				No notes available.
 			</p>
 		);
 	}
