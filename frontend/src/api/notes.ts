@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Note, Category } from "../types/note";
 
 const api = axios.create({
-	baseURL: "http://localhost:3000",
+	baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3000",
 });
 
 export const getActiveNotes = (): Promise<Note[]> =>
