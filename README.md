@@ -10,7 +10,7 @@ This project was originally developed as part of a technical challenge and later
 
 **Database:**
 - **Local:** SQLite (chosen to simplify setup, no external services required)
-- **Production:** PostgreSQL (hosted on Render)
+- **Production:** PostgreSQL (hosted on Supabase)
   
 ## Deploy
 
