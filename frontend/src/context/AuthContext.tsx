@@ -3,7 +3,7 @@ import {
 	useContext,
 	useState,
 	useEffect,
-	ReactNode,
+	type ReactNode,
 } from "react";
 import { logout as logoutApi, refresh } from "../api/auth";
 
