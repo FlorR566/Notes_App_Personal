@@ -48,17 +48,27 @@ export class NotesController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: Partial<Note>,
+    @Req() req: Request,
   ): Promise<Note> {
-    return this.notesService.update(id, body);
+    const user = req.user as { id: number; email: string };
+    return this.notesService.update(id, body, user.id);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.notesService.remove(id);
+  remove(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: Request,
+  ): Promise<void> {
+    const user = req.user as { id: number; email: string };
+    return this.notesService.remove(id, user.id);
   }
 
   @Patch(':id/archive')
-  toggleArchive(@Param('id', ParseIntPipe) id: number): Promise<Note> {
-    return this.notesService.toggleArchive(id);
+  toggleArchive(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req: Request,
+  ): Promise<Note> {
+    const user = req.user as { id: number; email: string };
+    return this.notesService.toggleArchive(id, user.id);
   }
 }
