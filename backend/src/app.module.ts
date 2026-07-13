@@ -14,7 +14,7 @@ import { CategoriesModule } from './categories/categories.module';
     ThrottlerModule.forRoot([
       {
         ttl: 60000,
-        limit: 60,
+        limit: 150,
       },
     ]),
     TypeOrmModule.forRootAsync({
