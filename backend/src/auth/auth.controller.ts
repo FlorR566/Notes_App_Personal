@@ -42,9 +42,9 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const refreshToken = req.cookies?.refreshToken;
-    const tokens = await this.authService.refreshTokens(refreshToken);
-    this.setTokenCookies(res, tokens.accessToken, tokens.refreshToken);
-    return { message: 'Tokens refreshed' };
+    const result = await this.authService.refreshTokens(refreshToken);
+    this.setTokenCookies(res, result.accessToken, result.refreshToken);
+    return { user: result.user };
   }
 
   @Post('logout')
