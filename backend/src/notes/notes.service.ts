@@ -15,7 +15,6 @@ export class NotesService {
   ) {}
 
   findAllActive(userId: number): Promise<Note[]> {
-    console.log('Finding notes for userId: ', userId);
     return this.notesRepository.find({
       where: { archived: false, user: { id: userId } },
     });
