@@ -10,12 +10,16 @@ export class NotesService {
     private notesRepository: Repository<Note>,
   ) {}
 
-  findAllActive(): Promise<Note[]> {
-    return this.notesRepository.find({ where: { archived: false } });
+  findAllActive(userId: number): Promise<Note[]> {
+    return this.notesRepository.find({
+      where: { archived: false, user: { id: userId } },
+    });
   }
 
-  findAllArchived(): Promise<Note[]> {
-    return this.notesRepository.find({ where: { archived: true } });
+  findAllArchived(userId: number): Promise<Note[]> {
+    return this.notesRepository.find({
+      where: { archived: true, user: { id: userId } },
+    });
   }
 
   async findOne(id: number): Promise<Note> {
@@ -24,8 +28,11 @@ export class NotesService {
     return note;
   }
 
-  create(data: Partial<Note>): Promise<Note> {
-    const note = this.notesRepository.create(data);
+  async create(data: Partial<Note>, userId: number): Promise<Note> {
+    const note = this.notesRepository.create({
+      ...data,
+      user: { id: userId },
+    });
     return this.notesRepository.save(note);
   }
 
