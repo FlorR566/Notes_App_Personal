@@ -6,9 +6,14 @@ import {
   Param,
   Body,
   ParseIntPipe,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { CategoriesService } from './categories.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
@@ -40,7 +45,11 @@ export class CategoriesController {
   }
 
   @Get('notes/:categoryId')
-  getNotesByCategory(@Param('categoryId', ParseIntPipe) categoryId: number) {
-    return this.categoriesService.getNotesByCategory(categoryId);
+  getNotesByCategory(
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+    @Req() req: Request,
+  ) {
+    const user = req.user as { id: number; email: string };
+    return this.categoriesService.getNotesByCategory(categoryId, user.id);
   }
 }

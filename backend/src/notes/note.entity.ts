@@ -6,8 +6,10 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { Category } from '../categories/category.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Note {
@@ -22,6 +24,9 @@ export class Note {
 
   @Column({ default: false })
   archived: boolean;
+
+  @ManyToOne(() => User, (user) => user.notes, { nullable: true })
+  user: User;
 
   @ManyToMany(() => Category, (category) => category.notes, { eager: true })
   @JoinTable()

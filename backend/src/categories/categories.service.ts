@@ -59,13 +59,18 @@ export class CategoriesService {
     return this.notesRepository.save(note);
   }
 
-  async getNotesByCategory(categoryId: number): Promise<Note[]> {
+  async getNotesByCategory(
+    categoryId: number,
+    userId: number,
+  ): Promise<Note[]> {
     return this.notesRepository
       .createQueryBuilder('note')
       .leftJoinAndSelect('note.categories', 'category')
       .innerJoin('note.categories', 'filterCategory')
+      .innerJoin('note.user', 'user')
       .where('filterCategory.id = :categoryId', { categoryId })
       .andWhere('note.archived = false')
+      .andWhere('note.id = :userId', { userId })
       .getMany();
   }
 }
