@@ -6,9 +6,12 @@ import {
   Param,
   Body,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
