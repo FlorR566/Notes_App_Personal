@@ -1,6 +1,8 @@
 # Notes App - Full Stack Application
 
-A simple full-stack note-taking web application built as a Single Page Application (SPA). It allows users to create, edit, delete and archive notes, as well as manage categories and filter notes by category.
+A simple full-stack note-taking web application built as a Single Page Application (SPA). It allows users to create, edit, delete and archive notes, as well as manage categories and filter notes by category. 
+
+Users can securely register, authenticate, and manage their own notes through a JWT-based authentication system.
 This project was originally developed as part of a technical challenge and later extended with additional features.
 
 ## Stack
@@ -9,13 +11,15 @@ This project was originally developed as part of a technical challenge and later
 - **Backend:** NestJS 11 + TypeScript + TypeORM
 
 **Database:**
+The application automatically selects the database based on the environment:
 - **Local:** SQLite (chosen to simplify setup, no external services required)
 - **Production:** PostgreSQL (hosted on Supabase)
   
 ## Deploy
 
-- **Frontend:** https://notes-app-2026.vercel.app
-- **Backend:** https://notes-app-personal.onrender.com
+
+- **Frontend:** [Vercel Deployment](https://notes-app-2026.vercel.app)
+- **Backend:** [Render API](https://notes-app-personal.onrender.com)
 
 - To run locally instead, use the `start.sh` script — see [How to run](#how-to-run) section for instructions.
 
@@ -57,7 +61,14 @@ This script will:
 
 ### Backend — NestJS
 
-Structured in layers:
+Structured in modules:
+
+- Auth Module
+- Users Module
+- Notes Module
+- Categories Module
+
+Each module follows the NestJS architecture:
 
 - **Controllers** — handle HTTP requests
 - **Services** — business logic
@@ -65,9 +76,13 @@ Structured in layers:
 
 ### Frontend — React SPA
 
-- `src/api/` — all backend calls (Axios)
+Main folders:
+
+- `src/api/` — all backend calls (Axios API clients)
 - `src/components/` — reusable UI components
-- `src/types/` — TypeScript interfaces
+- `src/context/` — authentication context and state management
+- `src/pages/` — application pages
+- `src/types/` — shared TypeScript interfaces and types
 
 ## Features
 
@@ -82,5 +97,38 @@ Structured in layers:
 
 - Add and remove categories from notes
 - Filter notes by category
+
+### Authentication
+
+- User registration
+- User login and logout
+- JWT authentication
+- Refresh token support
+- Protected API routes
+- User-specific note access
+
+
+### Multi-user Support
+
+Each user can:
+
+- Create personal notes
+- Organize personal notes with categories
+- View only their own notes
+- Filter notes by category
+- Archive and restore their own notes
+
+Ownership validation is enforced on the backend.
+
+
+### Security
+
+- JWT authentication using access and refresh tokens
+- HTTP-only cookies
+- Protected API routes
+- User ownership validation
+- Rate limiting with NestJS Throttler
+- CORS configuration allowing only approved frontend origins
+
 
 
