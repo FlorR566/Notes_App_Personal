@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-	baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3000",
-	withCredentials: true, // necessary to send and receive cookies
-});
+import { api } from "./notes";
 
 export const register = (email: string, password: string) =>
 	api.post("/auth/register", { email, password }).then((res) => res.data);
