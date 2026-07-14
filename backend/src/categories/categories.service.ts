@@ -70,7 +70,7 @@ export class CategoriesService {
       .innerJoin('note.user', 'user')
       .where('filterCategory.id = :categoryId', { categoryId })
       .andWhere('note.archived = false')
-      .andWhere('note.id = :userId', { userId })
+      .andWhere('user.id = :userId', { userId })
       .getMany();
   }
 }
