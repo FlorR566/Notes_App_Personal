@@ -8,6 +8,12 @@ export const api = axios.create({
 	withCredentials: true, // necessary to send and receive cookies
 });
 
+// Separate instance for refresh — avoids loops with the interceptor
+const refreshApi = axios.create({
+	baseURL: BASE_URL,
+	withCredentials: true,
+});
+
 // Interceptor that retries with refresh when it receives 401
 let isRefreshing = false;
 let failedQueue: Array<{
@@ -45,11 +51,7 @@ api.interceptors.response.use(
 			isRefreshing = true;
 
 			try {
-				await axios.post(
-					`${BASE_URL}/auth/refresh`,
-					{},
-					{ withCredentials: true },
-				);
+				await refreshApi.post("/auth/refresh", {});
 				processQueue(null);
 				return api(originalRequest);
 			} catch (refreshError) {
