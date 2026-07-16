@@ -18,7 +18,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
-const BACKEND_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+const BACKEND_URL =
+	import.meta.env.VITE_API_URL ??
+	(import.meta.env.PROD ? "/api" : "http://localhost:3000");
 
 // Keep Render free tier alive
 const keepAlive = () => {
