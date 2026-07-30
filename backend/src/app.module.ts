@@ -33,7 +33,7 @@ import { CategoriesModule } from './categories/categories.module';
         }
         return {
           type: 'better-sqlite3',
-          database: 'db.sqlite',
+          database: 'data/db.sqlite',
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
           synchronize: true,
         };
