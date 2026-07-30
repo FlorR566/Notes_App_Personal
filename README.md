@@ -1,6 +1,6 @@
 # Notes App - Full Stack Application
 
-A simple full-stack note-taking web application built as a Single Page Application (SPA). It allows users to create, edit, delete and archive notes, as well as manage categories and filter notes by category. 
+A simple full-stack note-taking web application built as a Single Page Application (SPA). It allows users to create, edit, delete and archive notes, as well as manage categories and filter notes by category.
 
 Users can securely register, authenticate, and manage their own notes through a JWT-based authentication system.
 This project was originally developed as part of a technical challenge and later extended with additional features.
@@ -12,16 +12,15 @@ This project was originally developed as part of a technical challenge and later
 
 **Database:**
 The application automatically selects the database based on the environment:
+
 - **Local:** SQLite (chosen to simplify setup, no external services required)
 - **Production:** PostgreSQL (hosted on Supabase)
-  
-## Deploy
 
+## Deploy
 
 - **Frontend:** [Vercel Deployment](https://notes-app-2026.vercel.app)
 - **Backend:** [Render API](https://notes-app-personal.onrender.com)
-
-- To run locally instead, use the `start.sh` script — see [How to run](#how-to-run) section for instructions.
+- To run locally instead, use the `start.sh` script or Docker — see [How to run](#how-to-run) bellow.
 
 ## Requirements
 
@@ -32,7 +31,16 @@ Make sure you have the following installed:
 | Node.js | 22.14.0 |
 | npm     | 11.17.0 |
 
+Or, to run with Docker instead:
+
+| Tool           | Version |
+| -------------- | ------- |
+| Docker         | Latest  |
+| Docker Compose | Latest  |
+
 ## How to run
+
+### Option A - Without Docker
 
 1. Clone the repository:
 
@@ -41,7 +49,16 @@ git clone https://github.com/FlorR566/Notes_App_Personal
 cd Notes_App_Personal
 ```
 
-2. Run the application (Linux/macOS):
+2. Configure Environment Variables:
+   Copy the .env.example file in the backend folder to .env:
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+> **Note:** The backend requires a `.env` file to run locally. Make sure to copy `.env.example` to `.env` before running the script.
+
+3.  Run the application (Linux/macOS):
 
 ```bash
 chmod +x start.sh
@@ -56,6 +73,24 @@ This script will:
 - Start the frontend on `http://localhost:5173`
 
 > Note: This script is intended for Linux/macOS environments.
+
+### Option B - With Docker (recommended for a quick try)
+
+No need to install Node.js, npm, or any dependency - just Docker.
+
+```bash
+git clone https://github.com/FlorR566/Notes_App_Personal
+cd Notes_App_Personal
+docker compose up
+```
+
+This pulls the pre-built images from Docker Hub and starts both services:
+
+- Frontend: `http://localhost:5173`
+- Backend API: proxied internally through the frontend at `/api` (same setup used in production, Vercel → Render)
+  The app uses SQLite inside the container, so no external database setup is required. Data persists across restarts via a Docker volume, but resets if you run `docker compose down -v`.
+
+Images are built and published automatically to Docker Hub on every push to `main` via GitHub Actions (`.github/workflows/docker-publish.yml`).
 
 ## Architecture
 
@@ -107,7 +142,6 @@ Main folders:
 - Protected API routes
 - User-specific note access
 
-
 ### Multi-user Support
 
 Each user can:
@@ -120,7 +154,6 @@ Each user can:
 
 Ownership validation is enforced on the backend.
 
-
 ### Security
 
 - JWT authentication using access and refresh tokens
@@ -129,6 +162,3 @@ Ownership validation is enforced on the backend.
 - User ownership validation
 - Rate limiting with NestJS Throttler
 - CORS configuration allowing only approved frontend origins
-
-
-
