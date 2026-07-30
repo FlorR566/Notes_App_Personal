@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: florodriguez/notes-app-backend:latest
+    environment:
+      # SQLite mode: this compose has no Postgres service, so NODE_ENV
+      # must stay != "production" (see backend/src/app.module.ts) or the
+      # app will try to connect to a DATABASE_URL that doesn't exist here.
+      - NODE_ENV=development
+      - PORT=3000
+      - FRONTEND_URL=http://localhost:5173
+    volumes:
+      - backend_db:/app/db.sqlite
+    expose:
+      - "3000"
+
+  frontend:
+    image: florodriguez/notes-app-frontend:latest
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend_db:
