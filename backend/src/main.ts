@@ -22,13 +22,13 @@ async function bootstrap() {
     credentials: true, // necesary for cookies
   });
 
+  const usersService = app.get(UsersService);
+
   // Health check endpoint
   const httpAdapter = app.getHttpAdapter();
-  httpAdapter.get('/health', async (res) => {
+  httpAdapter.get('/health', async (req, res) => {
     try {
-      const usersService = app.get(UsersService);
       const isConnected = await usersService.ping();
-
       res.json({
         status: isConnected ? 'ok' : 'error',
         database: isConnected ? 'connected' : 'disconnected',
