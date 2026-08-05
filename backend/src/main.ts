@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
+import { UsersService } from './users/users.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,8 +24,23 @@ async function bootstrap() {
 
   // Health check endpoint
   const httpAdapter = app.getHttpAdapter();
-  httpAdapter.get('/health', (req, res) => {
-    res.json({ status: 'ok' });
+  httpAdapter.get('/health', async (res) => {
+    try {
+      const usersService = app.get(UsersService);
+      const isConnected = await usersService.ping();
+
+      res.json({
+        status: isConnected ? 'ok' : 'error',
+        database: isConnected ? 'connected' : 'disconnected',
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: 'error',
+        database: 'disconnected',
+        message: error.message,
+      });
+    }
   });
 
   await app.listen(process.env.PORT ?? 3000);

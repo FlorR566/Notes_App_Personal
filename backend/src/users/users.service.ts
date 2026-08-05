@@ -21,4 +21,14 @@ export class UsersService {
     });
     return this.usersRepository.save(user);
   }
+
+  async ping(): Promise<boolean> {
+    try {
+      // Minimal database query using TypeORM
+      await this.usersRepository.query('SELECT 1');
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
